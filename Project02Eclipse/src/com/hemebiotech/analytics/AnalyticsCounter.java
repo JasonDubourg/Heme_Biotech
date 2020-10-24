@@ -3,41 +3,38 @@ package com.hemebiotech.analytics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0;	// initialize to 0
-	private static int rashCount = 0;		// initialize to 0
-	private static int pupilCount = 0;		// initialize to 0
-	
+	// Créer une map pour stocker les occurences pour chaque symptôme
+	static TreeMap<String, Integer> symptomsOccurence = new TreeMap<String, Integer>();
+
 	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
+		// Lire le fichier texte
+		BufferedReader reader = new BufferedReader(new FileReader("symptoms.txt"));
+		String lineSymptom = reader.readLine();
 
-		int i = 0;	// set i to 0
-		int headCount = 0;	// counts headaches
-		while (line != null) {
-			i++;	// increment i
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-				System.out.println("number of headaches: " + headCount);
+		// Compter le nombre d'occurence dans la liste et ajout dans la map
+		int occurence = 1;
+		while (lineSymptom != null) {
+			// Si la clé n'est pas présente on associe le nom du symptôme à la clé et on
+			// initie la valeur à 1
+			if (!(symptomsOccurence.containsKey(lineSymptom))) {
+				symptomsOccurence.put(lineSymptom, occurence);
+			} else {
+				// Sinon on ajoute 1 à la valeur d'occurence
+				symptomsOccurence.put(lineSymptom, symptomsOccurence.get(lineSymptom) + occurence);
 			}
-			else if (line.equals("rush")) {
-				rashCount++;
-			}
-			else if (line.contains("pupils")) {
-				pupilCount++;
-			}
-
-			line = reader.readLine();	// get another symptom
+			lineSymptom = reader.readLine();
 		}
-		
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
+
+		// Générer un fichier texte avec les symptômes et leurs occurences
+		FileWriter writer = new FileWriter("result.out");
+		Set<String> keys = symptomsOccurence.keySet();
+		for (String Key : keys) {
+			writer.write(String.format("%s : %d \n", Key, symptomsOccurence.get(Key)));
+		}
 		writer.close();
 	}
 }
