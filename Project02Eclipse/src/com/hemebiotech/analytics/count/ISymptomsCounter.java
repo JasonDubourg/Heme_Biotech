@@ -1,5 +1,8 @@
 package com.hemebiotech.analytics.count;
 
-public interface ISymptomsCounter {
+import java.util.List;
+import java.util.TreeMap;
 
+public interface ISymptomsCounter {
+	TreeMap<String, Integer> countSymptomsFromList(List<String> symptomsList);
 }
