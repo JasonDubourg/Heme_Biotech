@@ -7,18 +7,31 @@ import com.hemebiotech.analytics.count.CountSymptoms;
 import com.hemebiotech.analytics.read.ReadSymptomDataFromFile;
 import com.hemebiotech.analytics.write.WriteSymptoms;
 
+/**
+ * Initiate objects for read, count and write occurences symptoms.
+ * 
+ * @author Jason
+ * @version 1.0
+ */
 public class AnalyticsCounter {
 
+	/**
+	 * Create objects and call there functions to read, count and write occurences
+	 * symptoms.
+	 * 
+	 * @param inputFilename  name of input text file
+	 * @param outputFilename name of output text file
+	 */
 	public void analyticsCounter(String inputFilename, String outputFilename) {
-		// Lire le fichier texte
+		// Read text file
 		ReadSymptomDataFromFile readSymptomsDataFromFile = new ReadSymptomDataFromFile(inputFilename);
 		List<String> symptomsList = readSymptomsDataFromFile.getSymptoms();
 
-		// Compter le nombre d'occurence dans la liste et ajout dans la map
+		// Count occurences symptoms and add to map
 		CountSymptoms countSymptoms = new CountSymptoms();
 		TreeMap<String, Integer> symptomsOccurence = countSymptoms.countSymptomsFromList(symptomsList);
 
-		// Générer un fichier texte avec les symptômes et leurs occurences
+		// Write occurences symptoms on text file (alphabetical order)
 		WriteSymptoms writeSymptoms = new WriteSymptoms();
 		writeSymptoms.writeSymptomsFromList(symptomsOccurence, outputFilename);
 	}
