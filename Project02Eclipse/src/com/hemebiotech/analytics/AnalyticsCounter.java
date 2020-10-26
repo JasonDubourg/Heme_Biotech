@@ -12,7 +12,7 @@ public class AnalyticsCounter {
 	public void analyticsCounter(String inputFilename, String outputFilename) {
 		// Lire le fichier texte
 		ReadSymptomDataFromFile readSymptomsDataFromFile = new ReadSymptomDataFromFile(inputFilename);
-		List<String> symptomsList = readSymptomsDataFromFile.GetSymptoms();
+		List<String> symptomsList = readSymptomsDataFromFile.getSymptoms();
 
 		// Compter le nombre d'occurence dans la liste et ajout dans la map
 		CountSymptoms countSymptoms = new CountSymptoms();
