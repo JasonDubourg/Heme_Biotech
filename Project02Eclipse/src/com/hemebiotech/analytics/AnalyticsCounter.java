@@ -1,12 +1,11 @@
 package com.hemebiotech.analytics;
 
-import java.io.FileWriter;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeMap;
 
 import com.hemebiotech.analytics.count.CountSymptoms;
 import com.hemebiotech.analytics.read.ReadSymptomDataFromFile;
+import com.hemebiotech.analytics.write.WriteSymptoms;
 
 public class AnalyticsCounter {
 
@@ -20,11 +19,8 @@ public class AnalyticsCounter {
 		TreeMap<String, Integer> symptomsOccurence = countSymptoms.countSymptomsFromList(symptomsList);
 
 		// Générer un fichier texte avec les symptômes et leurs occurences
-		FileWriter writer = new FileWriter("result.out");
-		Set<String> keys = symptomsOccurence.keySet();
-		for (String Key : keys) {
-			writer.write(String.format("%s : %d \n", Key, symptomsOccurence.get(Key)));
-		}
-		writer.close();
+		String outputFilename = "result.out";
+		WriteSymptoms writeSymptoms = new WriteSymptoms();
+		writeSymptoms.writeSymptomsFromList(symptomsOccurence, outputFilename);
 	}
 }

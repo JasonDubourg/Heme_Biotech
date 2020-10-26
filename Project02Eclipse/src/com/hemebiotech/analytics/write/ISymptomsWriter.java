@@ -1,5 +1,7 @@
 package com.hemebiotech.analytics.write;
 
-public interface ISymptomsWriter {
+import java.util.TreeMap;
 
+public interface ISymptomsWriter {
+	void writeSymptomsFromList(TreeMap<String, Integer> symptomsOccurence, String outputFilename);
 }
