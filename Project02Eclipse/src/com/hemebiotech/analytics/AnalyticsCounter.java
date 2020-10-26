@@ -1,10 +1,11 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
+
+import com.hemebiotech.analytics.read.ReadSymptomDataFromFile;
 
 public class AnalyticsCounter {
 	// Créer une map pour stocker les occurences pour chaque symptôme
@@ -12,12 +13,12 @@ public class AnalyticsCounter {
 
 	public static void main(String args[]) throws Exception {
 		// Lire le fichier texte
-		BufferedReader reader = new BufferedReader(new FileReader("symptoms.txt"));
-		String lineSymptom = reader.readLine();
+		ReadSymptomDataFromFile readSymptomsDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
+		List<String> symptomsList = readSymptomsDataFromFile.GetSymptoms();
 
 		// Compter le nombre d'occurence dans la liste et ajout dans la map
 		int occurence = 1;
-		while (lineSymptom != null) {
+		for (String lineSymptom : symptomsList) {
 			// Si la clé n'est pas présente on associe le nom du symptôme à la clé et on
 			// initie la valeur à 1
 			if (!(symptomsOccurence.containsKey(lineSymptom))) {
@@ -26,7 +27,6 @@ public class AnalyticsCounter {
 				// Sinon on ajoute 1 à la valeur d'occurence
 				symptomsOccurence.put(lineSymptom, symptomsOccurence.get(lineSymptom) + occurence);
 			}
-			lineSymptom = reader.readLine();
 		}
 
 		// Générer un fichier texte avec les symptômes et leurs occurences
