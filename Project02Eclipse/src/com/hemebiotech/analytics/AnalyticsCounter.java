@@ -9,9 +9,9 @@ import com.hemebiotech.analytics.write.WriteSymptoms;
 
 public class AnalyticsCounter {
 
-	public static void main(String args[]) throws Exception {
+	public void analyticsCounter(String inputFilename, String outputFilename) {
 		// Lire le fichier texte
-		ReadSymptomDataFromFile readSymptomsDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
+		ReadSymptomDataFromFile readSymptomsDataFromFile = new ReadSymptomDataFromFile(inputFilename);
 		List<String> symptomsList = readSymptomsDataFromFile.GetSymptoms();
 
 		// Compter le nombre d'occurence dans la liste et ajout dans la map
@@ -19,7 +19,6 @@ public class AnalyticsCounter {
 		TreeMap<String, Integer> symptomsOccurence = countSymptoms.countSymptomsFromList(symptomsList);
 
 		// Générer un fichier texte avec les symptômes et leurs occurences
-		String outputFilename = "result.out";
 		WriteSymptoms writeSymptoms = new WriteSymptoms();
 		writeSymptoms.writeSymptomsFromList(symptomsOccurence, outputFilename);
 	}
