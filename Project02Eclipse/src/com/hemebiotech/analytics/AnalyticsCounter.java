@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.TreeMap;
 
 import com.hemebiotech.analytics.count.CountSymptoms;
+import com.hemebiotech.analytics.count.ISymptomsCounter;
+import com.hemebiotech.analytics.read.ISymptomReader;
 import com.hemebiotech.analytics.read.ReadSymptomDataFromFile;
+import com.hemebiotech.analytics.write.ISymptomsWriter;
 import com.hemebiotech.analytics.write.WriteSymptoms;
 
 /**
@@ -24,15 +27,15 @@ public class AnalyticsCounter {
 	 */
 	public void analyticsCounter(String inputFilename, String outputFilename) {
 		// Read text file
-		ReadSymptomDataFromFile readSymptomsDataFromFile = new ReadSymptomDataFromFile(inputFilename);
+		ISymptomReader readSymptomsDataFromFile = new ReadSymptomDataFromFile(inputFilename);
 		List<String> symptomsList = readSymptomsDataFromFile.getSymptoms();
 
 		// Count occurences symptoms and add to map
-		CountSymptoms countSymptoms = new CountSymptoms();
+		ISymptomsCounter countSymptoms = new CountSymptoms();
 		TreeMap<String, Integer> symptomsOccurence = countSymptoms.countSymptomsFromList(symptomsList);
 
 		// Write occurences symptoms on text file (alphabetical order)
-		WriteSymptoms writeSymptoms = new WriteSymptoms();
+		ISymptomsWriter writeSymptoms = new WriteSymptoms();
 		writeSymptoms.writeSymptomsFromList(symptomsOccurence, outputFilename);
 	}
 }
